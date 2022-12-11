@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  app:
+    image: todo-app:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      POSTGRES_PASSWORD: jjbatera4
+      POSTGRES_USER: jaijuni
+      POSTGRES_DB: todo-app
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: jjbatera4
+      POSTGRES_USER: jaijuni
+      POSTGRES_DB: todo-app
+    expose: 
+      - 9000
+    ports:
+      - 9000:5432
+    volumes:
+    - ./backups:/documents/my_study_projects/crud_with_nest/backups
+    command: -p 9000
+volumes:
+  db:
+    driver: local
